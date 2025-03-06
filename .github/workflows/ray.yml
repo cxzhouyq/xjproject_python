@@ -12,14 +12,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4  # 检出代码到工作目录
         
-      - name: Open TCP Port 18524
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y iptables
-          sudo iptables -A INPUT -p tcp --dport 18524 -j ACCEPT
-          sudo iptables -A OUTPUT -p tcp --sport 18524 -j ACCEPT
-          sudo iptables-save
-
       - name: Public IP
         id: ip
         uses: haythem/public-ip@v1.3  # 获取 GitHub Actions 运行器的公网 IP
@@ -35,8 +27,21 @@ jobs:
       - name: check service
         run: sudo systemctl status v2ray  # 给脚本执行权限并运行
 
-        
-        
-      - name: Wait for Service to Run
+      - name: Setup Ngrok Tunnel and Auto-Restart
         run: |
-          sleep 3000  # 等待 5 分钟，让服务运行一段时间
+          # 安装 ngrok
+          wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+          sudo unzip ngrok-stable-linux-amd64.zip
+          sudo chmod +x ngrok
+
+          # 启动 ngrok 并每 60 分钟重启一次
+          for ((i=0; i<4; i++)); do
+            echo "Starting ngrok tunnel for 60 minutes..."
+            sudo ./ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout > ngrok.log &
+            NGROK_PID=$!
+            sleep 3600  # 等待 60 分钟
+            echo "Restarting ngrok tunnel..."
+            kill $NGROK_PID
+          done
+
+        
