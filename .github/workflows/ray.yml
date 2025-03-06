@@ -39,6 +39,9 @@ jobs:
             echo "Starting ngrok tunnel for 60 minutes..."
             sudo ./ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout > ngrok.log &
             NGROK_PID=$!
+            # 从日志中提取隧道地址并打印
+            NGROK_URL=$(grep -oP 'tcp://\K[^ ]+' ngrok.log)
+            echo "Ngrok Tunnel Address: $NGROK_URL"
             sleep 3600  # 等待 60 分钟
             echo "Restarting ngrok tunnel..."
             kill $NGROK_PID
