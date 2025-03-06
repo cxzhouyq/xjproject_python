@@ -33,15 +33,23 @@ jobs:
           sudo unzip ngrok-stable-linux-amd64.zip
           sudo chmod +x ngrok
       
-          # 将 ngrok 移动到当前目录
-          sudo mv ngrok .
+          # 检查 ngrok 是否已经存在于当前目录
+          if [ -f "./ngrok" ]; then
+            echo "Ngrok is already in the current directory."
+          else
+            # 如果 ngrok 不在当前目录，将其移动到当前目录
+            sudo mv ngrok .
+          fi
+      
+          # 将 ngrok 添加到全局 PATH
+          sudo mv ngrok /usr/local/bin/
       
           # 启动 ngrok 并每 60 分钟重启一次
           for ((i=0; i<4; i++)); do
             echo "Starting ngrok tunnel for 60 minutes..."
       
             # 启动 ngrok 并将输出重定向到变量
-            NGROK_OUTPUT=$(./ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout & sleep 10; pkill -f ngrok)
+            NGROK_OUTPUT=$(ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout & sleep 10; pkill -f ngrok)
       
             # 打印 ngrok 的完整输出，用于调试
             echo "Ngrok Output:"
