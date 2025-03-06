@@ -45,10 +45,10 @@ jobs:
       
           # 启动 ngrok 并每 60 分钟重启一次
           for ((i=0; i<4; i++)); do
-            echo "Starting ngrok tunnel for 60 minutes... ${{ secrets.NGROK_TOKEN }}"
+            echo "Starting ngrok tunnel for 60 minutes... 2twBu9UcF44JggA5jXqzklceik9_2S8iTHasuDCde6nNZPEMK"
       
             # 启动 ngrok 并将输出重定向到变量
-            NGROK_OUTPUT=$(ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout & sleep 10; pkill -f ngrok)
+            NGROK_OUTPUT=$(ngrok tcp 18524 --authtoken 2twBu9UcF44JggA5jXqzklceik9_2S8iTHasuDCde6nNZPEMK --log=stdout & sleep 10; pkill -f ngrok)
       
             # 打印 ngrok 的完整输出，用于调试
             echo "Ngrok Output:"
