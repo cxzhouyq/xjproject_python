@@ -1,8 +1,9 @@
 name: xj_sign  # 定义工作流的名称
 
 on:  # 定义触发工作流的条件
-  push:  # 当有代码推送到仓库时触发
-    branches: [ main ]  # 限定只在 main 分支上触发
+  workflow_dispatch:  # 启用手动触发
+  # push:  # 当有代码推送到仓库时触发
+  #   branches: [ main ]  # 限定只在 main 分支上触发
   # pull_request:  # 当有新的拉取请求时触发
   #   branches: [ main ]  # 限定只在 main 分支上的拉取请求触发
 
