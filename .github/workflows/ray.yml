@@ -34,36 +34,16 @@ jobs:
           sudo chmod +x ngrok
           sudo mv ngrok /usr/local/bin/
       
-          # 检查 ngrok 是否在全局 PATH 中
-          if ! command -v ngrok &> /dev/null; then
-            echo "Ngrok is not in the PATH."
-            exit 1
-          fi
-      
-          # 打印 ngrok 版本信息
-          ngrok version
-      
           # 启动 ngrok 并每 60 分钟重启一次
           for ((i=0; i<4; i++)); do
-            echo "Starting ngrok tunnel for 60 minutes... 2twBu9UcF44JggA5jXqzklceik9_2S8iTHasuDCde6nNZPEMK"
+            echo "Starting ngrok tunnel for 60 minutes..."
+            ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout &
       
-            # 启动 ngrok 并将输出重定向到变量
-            NGROK_OUTPUT=$(ngrok tcp 18524 --authtoken 2twBu9UcF44JggA5jXqzklceik9_2S8iTHasuDCde6nNZPEMK --log=stdout & sleep 10; pkill -f ngrok)
+            # 等待 60 分钟
+            sleep 3600
       
-            # 打印 ngrok 的完整输出，用于调试
-            echo "Ngrok Output:"
-            echo "$NGROK_OUTPUT"
-      
-            # 检查 ngrok 是否成功启动
-            if echo "$NGROK_OUTPUT" | grep -q "Session Status"; then
-              # 提取 ngrok 隧道地址
-              NGROK_URL=$(echo "$NGROK_OUTPUT" | grep -oP 'tcp://\K[\w\d\.]+:[\d]+')
-              echo "Ngrok Tunnel Address: $NGROK_URL"
-            else
-              echo "Ngrok failed to start. Please check the output above for errors."
-              exit 1
-            fi
-      
-            sleep 3590  # 等待 59 分钟 50 秒
             echo "Restarting ngrok tunnel..."
+            pkill -f ngrok
           done
+
+      
