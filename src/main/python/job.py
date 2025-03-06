@@ -110,7 +110,7 @@ def vip_sign():
 
 if __name__ == "__main__":
     # pass
-     log_info("开始执行")
+    log_info("开始执行")
      
     # 立即执行一次
     # xj_sign()
