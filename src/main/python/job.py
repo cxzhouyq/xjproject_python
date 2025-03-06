@@ -114,7 +114,7 @@ if __name__ == "__main__":
      
     # 立即执行一次
     # xj_sign()
-    # vip_sign()
+    vip_sign()
 
     scheduler = BlockingScheduler()
     # scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
