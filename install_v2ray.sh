@@ -16,7 +16,7 @@ sudo sysctl -p
 
 # 配置 V2Ray
 sudo mkdir -p /usr/local/etc/v2ray
-PORT=$(shuf -i 10000-60000 -n 1)
+PORT=18524
 UUID=$(uuidgen)
 
 # 生成配置文件
