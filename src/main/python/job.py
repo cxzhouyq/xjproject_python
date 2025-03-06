@@ -55,7 +55,7 @@ def post_xj():
                     
                     log_info(f"请求url: {url}")
                     time.sleep(1)  # 间隔1秒
-                    
+                    log_info(f"用户信息[{user_entry}]")
                     response = requests.post(url, headers=headers)
                     log_info(f"Response Body: {response.text}")
                     
@@ -109,12 +109,11 @@ def vip_sign():
         log_info("执行完成")
 
 if __name__ == "__main__":
-    # pass
-    log_info("开始执行")
+
      
     # 立即执行一次
     # xj_sign()
-    vip_sign()
+    # vip_sign()
 
     scheduler = BlockingScheduler()
     # scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
@@ -123,4 +122,5 @@ if __name__ == "__main__":
     # # 每天 10:01 执行
     scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
     scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
+    log_info('ddddddd')
     scheduler.start()
