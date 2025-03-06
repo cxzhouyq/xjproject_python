@@ -38,11 +38,11 @@ jobs:
       
           # 启动 ngrok 并每 60 分钟重启一次
           for ((i=0; i<4; i++)); do
-            echo "Starting ngrok tunnel for 60 minutes..."
+            echo "Starting ngrok tunnel for 59 minutes..."
             ./ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout > ngrok.log &
             NGROK_PID=$!
             sleep 10  # 等待 10 秒，确保 ngrok 已启动并生成日志
-      
+            echo "开始提取日志"
             # 提取 ngrok 地址并打印
             NGROK_URL=$(grep -oP 'tcp://\K[\w\d\.]+:[\d]+' ngrok.log)
             echo "Ngrok Tunnel Address: $NGROK_URL"
