@@ -28,11 +28,15 @@ jobs:
 
       - name: Setup Ngrok Tunnel and Auto-Restart
         run: |
-          # 下载并安装最新版本的 ngrok
-          wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-v3-stable-linux-amd64.tgz
-          tar -xzf ngrok-v3-stable-linux-amd64.tgz
+          # 下载并安装最新版本的 ngrok (v3)
+          NGROK_URL="https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-v3-stable-linux-amd64.tgz"
+          wget $NGROK_URL -O ngrok-v3.tgz
+          tar -xzf ngrok-v3.tgz
           sudo chmod +x ngrok
           sudo mv ngrok /usr/local/bin/
+
+          # 验证 ngrok 版本
+          ngrok version
       
           # 启动 ngrok 并每 60 分钟重启一次
           for ((i=0; i<4; i++)); do
