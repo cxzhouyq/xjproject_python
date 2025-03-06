@@ -32,18 +32,25 @@ jobs:
           wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
           sudo unzip ngrok-stable-linux-amd64.zip
           sudo chmod +x ngrok
-
+      
+          # 验证 ngrok 是否正常安装
+          ./ngrok version
+      
           # 启动 ngrok 并每 60 分钟重启一次
           for ((i=0; i<4; i++)); do
             echo "Starting ngrok tunnel for 60 minutes..."
-            sudo ./ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout > ngrok.log &
+            ./ngrok tcp 18524 --authtoken ${{ secrets.NGROK_TOKEN }} --log=stdout > ngrok.log &
             NGROK_PID=$!
             sleep 10  # 等待 10 秒，确保 ngrok 已启动并生成日志
-
+      
             # 提取 ngrok 地址并打印
             NGROK_URL=$(grep -oP 'tcp://\K[\w\d\.]+:[\d]+' ngrok.log)
             echo "Ngrok Tunnel Address: $NGROK_URL"
-
+      
+            # 打印 ngrok 日志
+            echo "Ngrok Log:"
+            cat ngrok.log
+      
             sleep 3590  # 等待 59 分钟 50 秒
             echo "Restarting ngrok tunnel..."
             kill $NGROK_PID
