@@ -3,23 +3,22 @@ name: xj_sign  # 定义工作流的名称
 on:  # 定义触发工作流的条件
   push:  # 当有代码推送到仓库时触发
     branches: [ main ]  # 限定只在 main 分支上触发
-  pull_request:  # 当有新的拉取请求时触发
-    branches: [ main ]  # 限定只在 main 分支上的拉取请求触发
+  # pull_request:  # 当有新的拉取请求时触发
+  #   branches: [ main ]  # 限定只在 main 分支上的拉取请求触发
 
 jobs:  # 定义工作流中的任务
   build:  # 定义任务名称为 build
     runs-on: ubuntu-latest  # 指定运行环境为最新的 Ubuntu 系统
 
-    steps:  # 定义任务中的具体步骤
-      - name: Set Timezone to Beijing Time  # 设置服务器时间为北京时间
-        run: |
-          echo "Setting timezone to Asia/Shanghai"
-          timedatectl set-timezone Asia/Shanghai  # 设置时区为上海（北京时间）
+    env:  # 设置全局环境变量
+      TZ: Asia/Shanghai  # 设置时区为北京时间（Asia/Shanghai）
 
-      - uses: actions/checkout@v2  # 使用 actions/checkout 来检出代码
+    steps:  # 定义任务中的具体步骤
+      - name: Checkout code  # 步骤名称：检出代码
+        uses: actions/checkout@v2  # 使用 actions/checkout 动作来检出代码
 
       - name: Set up Python 3.9  # 步骤名称：设置 Python 3.9 环境
-        uses: actions/setup-python@v2  # 使用 actions/setup-python 来设置 Python 环境
+        uses: actions/setup-python@v2  # 使用 actions/setup-python 动作来设置 Python 环境
         with:  # 配置步骤的参数
           python-version: '3.9'  # 设置 Python 版本为 3.9
 
@@ -30,4 +29,4 @@ jobs:  # 定义工作流中的任务
 
       - name: Run tests  # 步骤名称：运行测试
         run: |  # 运行 shell 命令
-          python ./src/main/python/job.py  # 运行 pytest 测试框架来执行测试
+          python ./src/main/python/job.py  # 运行测试脚本
