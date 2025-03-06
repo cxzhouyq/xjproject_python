@@ -11,6 +11,14 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4  # 检出代码到工作目录
+        
+      - name: Open TCP Port 18524
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iptables
+          sudo iptables -A INPUT -p tcp --dport 18524 -j ACCEPT
+          sudo iptables -A OUTPUT -p tcp --sport 18524 -j ACCEPT
+          sudo iptables-save
 
       - name: Public IP
         id: ip
