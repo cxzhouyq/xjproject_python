@@ -112,7 +112,7 @@ if __name__ == "__main__":
 
      
     # 立即执行一次
-    # xj_sign()
+    xj_sign()
     # vip_sign()
 
     scheduler = BlockingScheduler()
