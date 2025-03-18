@@ -1,9 +1,9 @@
 name: xj_sign  # 定义工作流的名称
 
 on:  # 定义触发工作流的条件
-  schedule:
-    - cron: '35 15 * * *'  # 每天14:01 UTC，即北京时间22:01
-  # workflow_dispatch:  # 启用手动触发
+  # schedule:
+  #   - cron: '00 14 * * *'  # 每天14:01 UTC，即北京时间22:01
+  workflow_dispatch:  # 启用手动触发
   # push:  # 当有代码推送到仓库时触发
   #   branches: [ main ]  # 限定只在 main 分支上触发
   # pull_request:  # 当有新的拉取请求时触发
