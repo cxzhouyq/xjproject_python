@@ -18,28 +18,36 @@ jobs:
           sudo service ssh start
           echo "Current user is: $(whoami)"
 
-      # - name: Setup Ngrok Tunnel and Auto-Restart
-      #   run: |
-      #     # 添加 ngrok 的官方 GPG 密钥
-      #     curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
+      - name: Create SSH User
+        run: |
+          # 创建一个名为testuser的用户，密码为testpassword
+          sudo useradd -m testuser
+          echo "testuser:testpassword" | sudo chpasswd
+          sudo systemctl restart ssh
+          echo "SSH User testuser created with password testpassword"
 
-      #     # 添加 ngrok 的官方 APT 源
-      #     echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+      - name: Setup Ngrok Tunnel and Auto-Restart
+        run: |
+          # 添加 ngrok 的官方 GPG 密钥
+          curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
 
-      #     # 更新 APT 包列表并安装 ngrok
-      #     sudo apt update && sudo apt install ngrok
+          # 添加 ngrok 的官方 APT 源
+          echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
 
-      #     # 验证 ngrok 版本
-      #     ngrok version
+          # 更新 APT 包列表并安装 ngrok
+          sudo apt update && sudo apt install ngrok
+
+          # 验证 ngrok 版本
+          ngrok version
       
-      #     # 启动 ngrok 并每 60 分钟重启一次
-      #     for ((i=0; i<4; i++)); do
-      #       echo "Starting ngrok tunnel for 60 minutes... ${{ vars.NGROK_TOKEN }}"
-      #       ngrok tcp 22 --authtoken ${{ vars.NGROK_TOKEN }} --log=stdout &
+          # 启动 ngrok 并每 60 分钟重启一次
+          for ((i=0; i<4; i++)); do
+            echo "Starting ngrok tunnel for 60 minutes... ${{ vars.NGROK_TOKEN }}"
+            ngrok tcp 22 --authtoken ${{ vars.NGROK_TOKEN }} --log=stdout &
       
-      #       # 等待 60 分钟
-      #       sleep 3600
+            # 等待 60 分钟
+            sleep 3600
       
-      #       echo "Restarting ngrok tunnel..."
-      #       pkill -f ngrok
-      #     done
+            echo "Restarting ngrok tunnel..."
+            pkill -f ngrok
+          done
