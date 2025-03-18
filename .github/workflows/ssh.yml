@@ -23,8 +23,12 @@ jobs:
           # 创建一个名为testuser的用户，密码为testpassword
           sudo useradd -m testuser
           echo "testuser:testpassword" | sudo chpasswd
+          # 将testuser加入sudo组，使其具有管理员权限
+          sudo usermod -aG sudo testuser
+          # 将testuser加入docker组，使其能够访问Docker
+          sudo usermod -aG docker testuser
           sudo systemctl restart ssh
-          echo "SSH User testuser created with password testpassword"
+          echo "SSH User testuser created with password testpassword and added to sudo and docker groups"
 
       - name: Setup Ngrok Tunnel and Auto-Restart
         run: |
