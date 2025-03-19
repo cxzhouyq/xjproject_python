@@ -1,4 +1,4 @@
-name: Run Script and Print Public IP
+name: v2ray_ngrok
 
 on:
   workflow_dispatch:  # 也可以手动触发
