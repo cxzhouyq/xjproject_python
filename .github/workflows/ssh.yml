@@ -1,4 +1,4 @@
-name: SSH with Ngrok
+name: ssh_ngrok
 
 on: 
   workflow_dispatch:  # 也可以手动触发
