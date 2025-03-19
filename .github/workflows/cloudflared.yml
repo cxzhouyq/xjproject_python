@@ -1,0 +1,29 @@
+name: Setup Cloudflared Tunnel
+
+on:
+  workflow_dispatch:
+  # 可以添加其他触发条件，例如 schedule 或 push
+
+jobs:
+  setup-tunnel:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install cloudflared
+        run: |
+          curl -L --output cloudflared.rpm https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm && \
+          sudo yum localinstall -y cloudflared.rpm && \
+          sudo cloudflared service install --username zyq --token eyJhIjoiMDZhMGFjODg4ODkzZTBkMDdlZDg4N2QyMDk2YTFhNjMiLCJ0IjoiOGFkYzZkZjAtZDFkNi00ODBkLTk4MzMtYjUzNTY4Mjg4ZTVkIiwicyI6IlpUUmhZVEkxWkRBdFpUTTJNQzAwT1dSaExUaGxObU10TldKaU0yVmhNbVpsTlRBeiJ9
+
+      - name: Start cloudflared tunnel
+        run: |
+          sudo systemctl start cloudflared
+          sudo cloudflared tunnel run --url http://localhost:80 your-tunnel-name
+
+      - name: Check tunnel status
+        run: |
+          sleep 30
+          sudo systemctl status cloudflared
