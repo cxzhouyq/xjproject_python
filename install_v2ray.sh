@@ -22,7 +22,22 @@ UUID=7047f6fb-24fd-4d20-bfc2-85c78a520eee
 # 生成配置文件
 sudo cat <<EOF | sudo tee /usr/local/etc/v2ray/config.json
 {
-  "inbounds": [{
+  "inbounds": [
+  {
+      "port": 11080,  // SOCKS5 代理端口
+      "listen": "0.0.0.0",
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": true
+      }
+  },
+  {
+      "port": 11081,  // HTTP 代理端口
+      "listen": "0.0.0.0",
+      "protocol": "http",
+      "settings": {}
+  },{
     "port": $PORT,
     "protocol": "vmess",
     "settings": {
