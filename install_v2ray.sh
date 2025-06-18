@@ -33,7 +33,7 @@ sudo cat <<EOF | sudo tee /usr/local/etc/v2ray/config.json
       }
   },
   {
-      "port": 80,  // HTTP 代理端口
+      "port": 11081,  // HTTP 代理端口
       "listen": "0.0.0.0",
       "protocol": "http",
       "settings": {}
