@@ -1,3 +1,4 @@
+
 name: v2ray_ngrok
 
 on:
@@ -28,6 +29,9 @@ jobs:
 
       - name: Setup Ngrok Tunnel and Auto-Restart
         run: |
+          # 访问下谷歌
+          curl https://www.google.com/
+
           # 添加 ngrok 的官方 GPG 密钥
           curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
 
