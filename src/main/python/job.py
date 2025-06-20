@@ -120,7 +120,7 @@ if __name__ == "__main__":
     # scheduler.add_job(vip_sign, 'interval', minutes=60)  # 每60分钟执行一次 vip_sign
 
     # # 每天 10:01 执行
-    # scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
-    # scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
+    scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
+    scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
     log_info('ddddddd')
-    # scheduler.start()
+    scheduler.start()
