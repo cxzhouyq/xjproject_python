@@ -10,7 +10,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # 复制项目文件到工作目录
 COPY src/main/python /app
-COPY src/main/resources /app/resources
 COPY requirements.txt /app
 
 # 安装依赖
