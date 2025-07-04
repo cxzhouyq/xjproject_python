@@ -4,6 +4,7 @@ import random
 from datetime import datetime
 from config import load_config
 from utils import log_info, log_error
+from notify import send_error_notification
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
@@ -27,7 +28,6 @@ def post_xj():
         config['URL_TEMPLATES']['click'],
         config['URL_TEMPLATES']['pl']
     ]
-    
     for url_template in urls:
         for user_entry in xj_users:
             user_type, cookie = user_entry.split('_', 1)
@@ -76,6 +76,8 @@ def post_vip():
     config = load_config()
     users = config['DEFAULT']['users'].split(',')
     domains = config['DEFAULT']['domains'].split(',')
+    log_info(f"users: {users}")
+    log_info(f"domains: {domains}")
     fails = []
     for domain in domains:
         for user in users:
@@ -98,15 +100,19 @@ def xj_sign():
     fails = post_xj()
     if fails:
         log_error("\n".join(fails))
+        send_error_notification("\n".join(fails))
     else:
         log_info("执行完成")
+        send_error_notification("\n".join(fails))
 
 def vip_sign():
     fails = post_vip()
     if fails:
         log_error("\n".join(fails))
+        send_error_notification("\n".join(fails))
     else:
         log_info("执行完成")
+        send_error_notification("\n".join(fails))
 
 if __name__ == "__main__":
 
@@ -115,11 +121,11 @@ if __name__ == "__main__":
     xj_sign()
     vip_sign()
 
-    # scheduler = BlockingScheduler()
-    # scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
-    # scheduler.add_job(vip_sign, 'interval', minutes=60)  # 每60分钟执行一次 vip_sign
+    scheduler = BlockingScheduler()
+    scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
+    scheduler.add_job(vip_sign, 'interval', minutes=60)  # 每60分钟执行一次 vip_sign
 
-    # # 每天 10:01 执行
+    # 每天 10:01 执行
     scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
     scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
     log_info('ddddddd')
