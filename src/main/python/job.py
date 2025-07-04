@@ -103,7 +103,7 @@ def xj_sign():
         send_error_notification("\n".join(fails))
     else:
         log_info("执行完成")
-        send_error_notification("\n".join(fails))
+        send_error_notification("执行完成")
 
 def vip_sign():
     fails = post_vip()
@@ -112,7 +112,7 @@ def vip_sign():
         send_error_notification("\n".join(fails))
     else:
         log_info("执行完成")
-        send_error_notification("\n".join(fails))
+        send_error_notification("执行完成")
 
 if __name__ == "__main__":
 
