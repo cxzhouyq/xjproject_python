@@ -1,0 +1,11 @@
+name: xj_new
+services:
+  xj_new:
+    image: xj_new:latest
+    container_name: xj_new
+    network_mode: bridge
+    ports:
+      - 8000:8080
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/resources
