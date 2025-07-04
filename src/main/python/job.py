@@ -89,10 +89,14 @@ def post_vip():
                 response = requests.post(domain, headers=headers)
                 log_info(f"请求url: {domain}")
                 log_info(f"Response Body: {response.text}")
-                if response.status_code != 200:
-                    fails.append(f"{domain}({user})请求失败！")
+                try:
+                    response_data = response.json()
+                    if response.status_code != 200 or response_data.get('code') != 200:
+                        fails.append(f"({user})请求失败！")
+                except (ValueError, KeyError):
+                    fails.append(f"({user})请求失败！")
             except Exception as e:
-                fails.append(f"{domain}({user})请求失败！")
+                fails.append(f"({user})请求失败！")
                 log_error(e)
     return fails
 
@@ -118,15 +122,15 @@ if __name__ == "__main__":
 
      
     # 立即执行一次
-    xj_sign()
+    # xj_sign()
     vip_sign()
 
-    scheduler = BlockingScheduler()
-    scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
-    scheduler.add_job(vip_sign, 'interval', minutes=60)  # 每60分钟执行一次 vip_sign
+    # scheduler = BlockingScheduler()
+    # scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
+    # scheduler.add_job(vip_sign, 'interval', minutes=60)  # 每60分钟执行一次 vip_sign
 
     # 每天 10:01 执行
-    scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
-    scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
-    log_info('ddddddd')
-    scheduler.start()
+    # scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
+    # scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
+    # log_info('ddddddd')
+    # scheduler.start()
