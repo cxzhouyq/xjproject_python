@@ -123,14 +123,14 @@ if __name__ == "__main__":
      
     # 立即执行一次
     # xj_sign()
-    # vip_sign()
+    vip_sign()
 
-    scheduler = BlockingScheduler()
+    # scheduler = BlockingScheduler()
     # scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
     # scheduler.add_job(vip_sign, 'interval', minutes=60)  # 每60分钟执行一次 vip_sign
 
     # 每天 10:01 执行
-    scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
-    scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
-    log_info('ddddddd')
-    scheduler.start()
+    # scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
+    # scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
+    # log_info('ddddddd')
+    # scheduler.start()
