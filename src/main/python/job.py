@@ -58,9 +58,17 @@ def post_xj():
                     log_info(f"用户信息[{user_entry}]")
                     response = requests.post(url, headers=headers)
                     log_info(f"Response Body: {response.text}")
+
+                    # {"retcode":-9999,"errmsg":"\u60a8\u8fd8\u6ca1\u6709\u767b\u5f55","data":{"xxx_api_auth":"6362376533663933643735663137376664343762386434663531376666356538"}}
                     
                     if response.status_code == 200:
-                        break
+                        try:
+                            response_data = response.json()
+                            if response_data.get('retcode') == -9999:
+                                fails.append(f"{url}({user_entry})请求失败，cookies失效！")
+                            break
+                        except ValueError:
+                            fails.append(f"{url}({user_entry})请求失败，非json返回值")
                     elif domain == domains[-1]:
                         fails.append(f"{url}({user_entry})请求失败！")
                         
@@ -107,7 +115,7 @@ def xj_sign():
         send_error_notification("\n".join(fails))
     else:
         log_info("执行完成")
-        send_error_notification("执行完成")
+        # send_error_notification("执行完成")
 
 def vip_sign():
     fails = post_vip()
@@ -116,7 +124,7 @@ def vip_sign():
         send_error_notification("\n".join(fails))
     else:
         log_info("执行完成")
-        send_error_notification("执行完成")
+        # send_error_notification("执行完成")
 
 if __name__ == "__main__":
 
@@ -125,11 +133,8 @@ if __name__ == "__main__":
     # xj_sign()
     # vip_sign()
 
+# 每天 10:01 执行
     scheduler = BlockingScheduler()
-    # scheduler.add_job(xj_sign, 'interval', minutes=30)  # 每30分钟执行一次 xj_sign
-    # scheduler.add_job(vip_sign, 'interval', minutes=60)  # 每60分钟执行一次 vip_sign
-
-    # 每天 10:01 执行
     scheduler.add_job(xj_sign, 'cron', hour=22, minute=1)
     scheduler.add_job(vip_sign, 'cron', hour=7, minute=2)
     log_info('ddddddd')
