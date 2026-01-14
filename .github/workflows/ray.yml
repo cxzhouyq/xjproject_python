@@ -12,9 +12,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4  # 检出代码到工作目录
         
-      # - name: Public IP
-      #   id: ip
-      #   uses: haythem/public-ip@v1.3  # 获取 GitHub Actions 运行器的公网 IP
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1.3  # 获取 GitHub Actions 运行器的公网 IP
 
       # - name: Print Public IP
       #   run: |
