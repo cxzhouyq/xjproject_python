@@ -131,7 +131,7 @@ if __name__ == "__main__":
 
     # 立即执行一次
     xj_sign()
-    vip_sign()
+    # vip_sign()
 
 # 每天 10:01 执行
    # scheduler = BlockingScheduler()
