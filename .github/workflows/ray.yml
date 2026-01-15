@@ -45,9 +45,9 @@ jobs:
           ngrok version
       
           # 启动 ngrok 并每 60 分钟重启一次
-          for ((i=0; i<4; i++)); do
+          for ((i=0; i<1; i++)); do
             echo "Starting ngrok tunnel for 60 minutes... ${{ vars.NGROK_TOKEN }}"
-            ngrok tcp 11080 --authtoken ${{ vars.NGROK_TOKEN }} --log=stdout &
+            ngrok tcp 18524 --authtoken ${{ vars.NGROK_TOKEN }} --log=stdout &
       
             # 等待 60 分钟
             sleep 3600
