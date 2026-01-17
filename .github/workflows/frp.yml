@@ -55,7 +55,7 @@ jobs:
             ./frpc -c frpc.ini &
       
             # 等待 60 分钟（3600 秒）
-            sleep 3600
+            sleep 3600*6
       
             echo "Restarting frp client..."
             pkill -f frpc
