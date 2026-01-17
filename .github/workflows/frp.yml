@@ -26,7 +26,7 @@ jobs:
           # 访问谷歌验证网络
           curl https://www.google.com/
 
-          # 下载 frp 客户端（适配 Ubuntu amd64 架构，版本为 0.54.0，可根据需要更新）
+          # 下载 frp 客户端（适配 Ubuntu amd64 架构，版本为 0.54.0）
           FRP_VERSION="0.54.0"
           wget https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_amd64.tar.gz -O frp.tar.gz
 
@@ -34,19 +34,18 @@ jobs:
           tar -zxvf frp.tar.gz
           cd frp_${FRP_VERSION}_linux_amd64
 
-          # 创建 frp 客户端配置文件
-          cat > frpc.ini << EOF
+          # 创建 frp 客户端配置文件（修复 YAML 语法问题）
+          cat > frpc.ini << 'EOF'
 [common]
-server_addr = 27.151.105.243  # 你的 frp 服务端公网IP
-server_port = 7000            # 服务端 bind_port
-token = zyq5102550            # 服务端 token
+server_addr = 27.151.105.243
+server_port = 7000
+token = zyq5102550
 
-# TCP 穿透配置：将客户端 18524 端口映射到服务端的 18524 端口（可自定义 remote_port）
 [v2ray-tcp]
 type = tcp
 local_ip = 127.0.0.1
 local_port = 18524
-remote_port = 8001  # 需确保服务端该端口未被占用，且路由器已映射该端口到虚拟机
+remote_port = 18524
 EOF
 
           # 赋予 frpc 执行权限
