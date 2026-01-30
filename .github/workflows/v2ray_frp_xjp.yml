@@ -57,7 +57,7 @@ jobs:
           transport.tls.disable_custom_tls_first_byte = false
           
           # 代理配置
-          [ray_hw]
+          [xjp]
           type = tcp
           local_ip = 127.0.0.1
           local_port = 18524
