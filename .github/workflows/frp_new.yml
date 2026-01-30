@@ -62,9 +62,6 @@ jobs:
           local_ip = 127.0.0.1
           local_port = 18524
           remote_port = 24448
-
-
-          
           EOF
 
           # 赋予 frpc 执行权限
@@ -76,7 +73,7 @@ jobs:
             ./frpc -c frpc.ini &
       
             # 等待 60 分钟（3600 秒）
-            sleep 3600*6
+            sleep 21600
       
             echo "Restarting frp client..."
             pkill -f frpc
