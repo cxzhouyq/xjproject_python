@@ -24,8 +24,8 @@ jobs:
       - name: Setup FRP Client and Auto-Restart
         run: |
 
-          # 下载 frp 客户端（适配 Ubuntu amd64 架构，版本为 0.54.0）
-          FRP_VERSION="0.54.0"
+          # 下载 frp 客户端（适配 Ubuntu amd64 架构，版本为 0.50.0）
+          FRP_VERSION="0.50.0"
           wget https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_amd64.tar.gz -O frp.tar.gz
 
           # 解压 frp
@@ -40,21 +40,28 @@ jobs:
           # token = zyq5102550
 
           [common]
-          # user = vjm05wo9ljnnagjgzsnbes5mlqphx478
           user = s-020oc0vjm0x478
           token = vjm05wo9ljnnagjgzsnbes5mlqphx478
           
-          sakura_mode = true
-          login_fail_exit = false
+          tls_enable = false
+          disable_custom_tls_first_byte = false
           
           server_addr = frp-fly.com
           server_port = 8088
           
-          [v2ray-tcp]
+          [ray_hw]
+          # id = 25653729
           type = tcp
           local_ip = 127.0.0.1
           local_port = 18524
           remote_port = 24448
+
+          
+          # [v2ray-tcp]
+          # type = tcp
+          # local_ip = 127.0.0.1
+          # local_port = 18524
+          # remote_port = 24448
           EOF
 
           # 赋予 frpc 执行权限
