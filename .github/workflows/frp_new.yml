@@ -70,8 +70,8 @@ jobs:
           # 启动 frp 客户端并每 60 分钟重启一次
           for ((i=0; i<1; i++)); do
             echo "Starting frp client for 60 minutes..."
-            ./frpc -c frpc.ini &
-      
+            ./frpc -c frpc.ini > frpc.log 2>&1 &
+            tail -f frpc.log
             # 等待 60 分钟（3600 秒）
             sleep 21600
       
