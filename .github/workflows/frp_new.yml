@@ -34,16 +34,27 @@ jobs:
 
           # 创建 frp 客户端配置文件（修复 YAML 语法问题）
           cat > frpc.ini << 'EOF'
+          # [common]
+          # server_addr = 27.151.105.243
+          # server_port = 7000
+          # token = zyq5102550
+
           [common]
-          server_addr = 27.151.105.243
-          server_port = 7000
-          token = zyq5102550
+          # user = vjm05wo9ljnnagjgzsnbes5mlqphx478
+          user = s-020oc0vjm0x478
+          token = vjm05wo9ljnnagjgzsnbes5mlqphx478
+          
+          sakura_mode = true
+          login_fail_exit = false
+          
+          server_addr = frp-sea.com
+          server_port = 8088
           
           [v2ray-tcp]
           type = tcp
           local_ip = 127.0.0.1
           local_port = 18524
-          remote_port = 18524
+          remote_port = 47291
           EOF
 
           # 赋予 frpc 执行权限
