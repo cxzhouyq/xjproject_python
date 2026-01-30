@@ -47,14 +47,14 @@ jobs:
           sakura_mode = true
           login_fail_exit = false
           
-          server_addr = frp-sea.com
+          server_addr = frp-fly.com
           server_port = 8088
           
           [v2ray-tcp]
           type = tcp
           local_ip = 127.0.0.1
           local_port = 18524
-          remote_port = 47291
+          remote_port = 24448
           EOF
 
           # 赋予 frpc 执行权限
