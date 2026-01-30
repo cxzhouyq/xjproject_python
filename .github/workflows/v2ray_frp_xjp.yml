@@ -2,6 +2,8 @@ name: v2ray_frp_xjp
 
 on:
   workflow_dispatch:  # 手动触发
+  repository_dispatch:
+    types: [v2ray_frp_xjp-task]  # 自定义事件类型（名字任意，比如叫 trigger-task）  
 
 jobs:
   run-script:
