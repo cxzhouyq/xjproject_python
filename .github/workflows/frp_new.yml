@@ -38,25 +38,24 @@ jobs:
           # server_addr = 27.151.105.243
           # server_port = 7000
           # token = zyq5102550
-
-          [common]
-          user = s-020oc0vjm0x478
-          token = vjm05wo9ljnnagjgzsnbes5mlqphx478
+          user = "s-020oc0vjm0x478"
+          auth.token = "vjm05wo9ljnnagjgzsnbes5mlqphx478"
           
-          tls_enable = false
-          disable_custom_tls_first_byte = false
+          serverAddr = "frp-fly.com"
+          serverPort = 8088
           
-          server_addr = frp-fly.com
-          server_port = 8088
+          transport.tls.enable = false
+          transport.tls.disableCustomTLSFirstByte = false
           
-          [ray_hw]
+          [[proxies]]
           # id = 25653729
-          type = tcp
-          local_ip = 127.0.0.1
-          local_port = 18524
-          remote_port = 24448
-
+          name = "ray_hw"
+          type = "tcp"
           
+          localIP = "127.0.0.1"
+          localPort = 18524
+          remotePort = 24448
+                   
           # [v2ray-tcp]
           # type = tcp
           # local_ip = 127.0.0.1
