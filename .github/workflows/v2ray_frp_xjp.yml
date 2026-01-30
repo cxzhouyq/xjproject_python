@@ -1,0 +1,80 @@
+name: v2ray_frp_xjp
+
+on:
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest  # 使用 GitHub 提供的最新 Ubuntu 环境
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4  # 检出代码到工作目录
+        
+      - name: Public IP
+        id: ip
+        uses: haythem/public-ip@v1.3  # 获取 GitHub Actions 运行器的公网 IP
+
+      - name: Run Script
+        run: sudo chmod +x install_v2ray.sh && sudo ./install_v2ray.sh  # 给脚本执行权限并运行
+
+      - name: Check service
+        run: sudo systemctl status v2ray  # 检查服务状态
+
+      - name: Setup FRP Client and Auto-Restart
+        run: |
+
+          # 下载 frp 客户端（适配 Ubuntu amd64 架构，版本为 0.50.0）
+          FRP_VERSION="0.54.0"
+          wget https://github.com/fatedier/frp/releases/download/v${FRP_VERSION}/frp_${FRP_VERSION}_linux_amd64.tar.gz -O frp.tar.gz
+
+          # 解压 frp
+          tar -zxvf frp.tar.gz
+          cd frp_${FRP_VERSION}_linux_amd64
+
+          # 创建 frp 客户端配置文件（修复 YAML 语法问题）
+          cat > frpc.ini << 'EOF'
+          # [common]
+          # server_addr = 27.151.105.243
+          # server_port = 7000
+          # token = zyq5102550
+                           
+          # [v2ray-tcp]
+          # type = tcp
+          # local_ip = 127.0.0.1
+          # local_port = 18524
+          # remote_port = 24448
+
+          # frpc.ini - frp客户端0.54.0 标准配置
+          [common]
+          user = s-020oc0vjm0x478
+          token = vjm05wo9ljnnagjgzsnbes5mlqphx478
+          server_addr = frp-can.com
+          server_port = 8088
+          
+          # 传输层TLS配置
+          transport.tls.enable = false
+          transport.tls.disable_custom_tls_first_byte = false
+          
+          # 代理配置
+          [ray_hw]
+          type = tcp
+          local_ip = 127.0.0.1
+          local_port = 18524
+          remote_port = 32544
+          EOF
+
+          # 赋予 frpc 执行权限
+          chmod +x frpc
+
+          # 启动 frp 客户端并每 60 分钟重启一次
+          for ((i=0; i<1; i++)); do
+            echo "Starting frp client for 60 minutes..."
+            ./frpc -c frpc.ini > frpc.log 2>&1 &
+            tail -f frpc.log
+            # 等待 60 分钟（3600 秒）
+            sleep 21600
+      
+            echo "Restarting frp client..."
+            pkill -f frpc
+          done
