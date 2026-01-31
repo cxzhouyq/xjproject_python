@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 虚拟环境
+venv/
+env/
+env.local/
+env.*.local/
+
+# 编辑器配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# 环境变量
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 日志
+logs
+*.log
+
+# 测试
+.pytest_cache/
+.coverage
+coverage.xml
+
+# Docker
+docker-compose.override.yml
+
+# 其他临时文件
+*.tmp
+*.temp
+.cache/
+
+# 构建产物
+build/
+dist/
+*.egg-info/
+
+# 数据库
+*.db
+*.sqlite3
+
+# 包管理
+.Python
+
+# 本地配置文件
+local_settings.py
+
+# IDE相关
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 操作系统相关
+Thumbs.db
+.DS_Store
+
+# 脚本
+*.sh
+*.bat
+
+# 配置文件
+resources/config.ini
