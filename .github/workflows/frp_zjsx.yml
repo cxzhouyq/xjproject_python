@@ -1,4 +1,4 @@
-name: v2ray_frp_new
+name: v2ray_frp_zjsx
 
 on:
   workflow_dispatch:  # 手动触发
