@@ -49,7 +49,7 @@ jobs:
           [common]
           user = s-020oc0vjm0x478
           token = vjm05wo9ljnnagjgzsnbes5mlqphx478
-          server_addr = frp-fly.com
+          server_addr = frp-bar.com
           server_port = 8088
           
           # 传输层TLS配置
@@ -57,11 +57,11 @@ jobs:
           transport.tls.disable_custom_tls_first_byte = false
           
           # 代理配置
-          [ray_hw]
+          [zjsx]
           type = tcp
           local_ip = 127.0.0.1
           local_port = 18524
-          remote_port = 24448
+          remote_port = 43273
           EOF
 
           # 赋予 frpc 执行权限
