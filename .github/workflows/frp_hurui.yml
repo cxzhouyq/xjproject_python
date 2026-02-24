@@ -43,7 +43,7 @@ jobs:
           type = tcp
           local_ip = 127.0.0.1
           local_port = 18524
-          remote_port = 18524
+          remote_port = 55012
           EOF
 
           # 赋予 frpc 执行权限
