@@ -35,7 +35,7 @@ jobs:
           # 创建 frp 客户端配置文件（修复 YAML 语法问题）
           cat > frpc.ini << 'EOF'
           [common]
-          server_addr = 6.egt365.com
+          server_addr = 121.207.230.6
           server_port = 55010
           token = huarui_fpr_2019
           
@@ -43,7 +43,7 @@ jobs:
           type = tcp
           local_ip = 127.0.0.1
           local_port = 18524
-          remote_port = 55012
+          remote_port = 55017
           EOF
 
           # 赋予 frpc 执行权限
