@@ -7,7 +7,7 @@ jobs:
   run-script:
     runs-on: ubuntu-latest  # 使用 GitHub 提供的最新 Ubuntu 环境
     repository_dispatch:
-      types: [v2ray_frp_tw-task]  # 自定义事件类型（名字任意，比如叫 trigger-task）  
+      types: [v2ray_frp_huarui-task]  # 自定义事件类型（名字任意，比如叫 trigger-task）  
 
     steps:
       - name: Checkout Repository
