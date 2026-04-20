@@ -30,7 +30,7 @@ def post_xj():
     ]
     for url_template in urls:
         for user_entry in xj_users:
-            user_type, cookie = user_entry.split('_', 1)
+            user_type, user_name, cookie = user_entry.split('_', 2)
 
             # 检查周六条件
             if "taskid=1622" in url_template and weekday != 5:  # 5=Saturday
