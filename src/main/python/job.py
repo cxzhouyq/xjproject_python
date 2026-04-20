@@ -65,17 +65,17 @@ def post_xj():
                         try:
                             response_data = response.json()
                             if response_data.get('retcode') == -9999:
-                                fails.append(f"{url}({user_entry})请求失败，cookies失效！")
+                                fails.append(f"{url}({user_name})请求失败，cookies失效！")
                             break
                         except ValueError:
-                            fails.append(f"{url}({user_entry})请求失败，非json返回值")
+                            fails.append(f"{url}({user_name})请求失败，非json返回值")
                     elif domain == domains[-1]:
-                        fails.append(f"{url}({user_entry})请求失败！")
+                        fails.append(f"{url}({user_name})请求失败！")
 
                 except Exception as e:
                     log_error(e)
                     if domain == domains[-1]:
-                        fails.append(f"{url}({user_entry})请求失败！")
+                        fails.append(f"{url}({user_name})请求失败！")
 
     return fails
 
