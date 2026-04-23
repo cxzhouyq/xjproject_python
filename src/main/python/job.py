@@ -15,7 +15,7 @@ def post_xj():
 
     # 从配置获取数据
     config = load_config()
-    xj_users = config['XJ']['users'].split(',')
+    xj_users = config['XJ']['users'].replace('\n', '').replace(' ', '').split(',')
     xj_domains = config['XJ']['domains'].split(',')
     ym_domains = config['YM']['domains'].split(',')
 
@@ -54,12 +54,12 @@ def post_xj():
                     }
 
                     log_info(f"请求url: {url}")
-                    time.sleep(1)  # 间隔1秒
+#                     time.sleep(1)  # 间隔1秒
                     log_info(f"用户信息[{user_entry}]")
                     response = requests.post(url, headers=headers, timeout=30, verify=False)
                     log_info(f"Response Body: {response.text}")
 
-                    # {"retcode":-9999,"errmsg":"\u60a8\u8fd8\u6ca1\u6709\u767b\u5f55","data":{"xxx_api_auth":"6362376533663933643735663137376664343762386434663531376666356538"}}
+#                     {"retcode":-9999,"errmsg":"\u60a8\u8fd8\u6ca1\u6709\u767b\u5f55","data":{"xxx_api_auth":"6362376533663933643735663137376664343762386434663531376666356538"}}
 
                     if response.status_code == 200:
                         try:
