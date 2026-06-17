@@ -46,13 +46,13 @@ sudo cat <<EOF | sudo tee /usr/local/etc/v2ray/config.json
       }]
     },
     "streamSettings": {
-      "network": "tcp",
+      "network": "tcp"
       // 伪装成普通网页TCP流量，混淆特征，不设置即不伪装，性能最好，当裸奔容易被发现
-      "tcpSettings": {
-          "header": {
-            "type": "http"
-          }
-      }
+      // "tcpSettings": {
+      //     "header": {
+      //       "type": "http"
+      //     }
+      // }
     }
   }],
   "outbounds": [{
