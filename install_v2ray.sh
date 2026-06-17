@@ -11,6 +11,19 @@ bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/
 sudo tee /etc/sysctl.conf <<-'EOF' > /dev/null
 net.core.default_qdisc = fq
 net.ipv4.tcp_congestion_control = bbr
+net.ipv4.tcp_fastopen = 3
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.ipv4.tcp_wmem = 4096 65536 16777216
+net.ipv4.tcp_window_scaling = 1
+net.ipv4.tcp_moderate_rcvbuf = 1
+net.core.somaxconn = 65535
+net.ipv4.ip_local_port_range = 1024 65535
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_timestamps = 1
 EOF
 sudo sysctl -p
 
@@ -24,20 +37,6 @@ sudo cat <<EOF | sudo tee /usr/local/etc/v2ray/config.json
 {
   "inbounds": [
   {
-      "port": 11080,  // SOCKS5 代理端口
-      "listen": "0.0.0.0",
-      "protocol": "socks",
-      "settings": {
-        "auth": "noauth",
-        "udp": true
-      }
-  },
-  {
-      "port": 11081,  // HTTP 代理端口
-      "listen": "0.0.0.0",
-      "protocol": "http",
-      "settings": {}
-  },{
     "port": $PORT,
     "protocol": "vmess",
     "settings": {
@@ -48,7 +47,7 @@ sudo cat <<EOF | sudo tee /usr/local/etc/v2ray/config.json
     },
     "streamSettings": {
       "network": "tcp",
-      // 伪装成普通网页TCP流量，混淆特征
+      // 伪装成普通网页TCP流量，混淆特征，不设置即不伪装，性能最好，当裸奔容易被发现
       "tcpSettings": {
           "header": {
             "type": "http"
