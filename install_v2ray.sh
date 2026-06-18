@@ -5,7 +5,7 @@ sudo apt update
 sudo apt install -y curl wget uuid-runtime
 
 # 安装 V2Ray
-bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh) --version v5.49.0
 
 # 启用 BBR
 sudo tee /etc/sysctl.conf <<-'EOF' > /dev/null
